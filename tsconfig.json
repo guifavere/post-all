@@ -19,6 +19,8 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "rootDir": "src",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
   },
   "include": [
     "next-env.d.ts",
