@@ -1,4 +1,3 @@
-import next from 'next';
 import { EntityManager } from 'typeorm';
 
 declare module 'next' {
