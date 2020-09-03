@@ -9,10 +9,13 @@ interface ApiRequest extends NextApiRequest {
 
 async function destroy(req: ApiRequest, res: NextApiResponse) {
   const { id } = req.query;
+  const tag = await req.db.find('Tag', id);
+
+  if (!tag) return res.status(404).json({ message: 'Tag not found' });
 
   await req.db.delete('Tag', { id });
 
-  res.status(200).json([]);
+  return res.status(204).json([]);
 }
 
 async function update(req: ApiRequest, res: NextApiResponse) {
