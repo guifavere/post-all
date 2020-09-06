@@ -20,7 +20,7 @@ async function create(req: ApiRequest, res: NextApiResponse) {
   const newTag = new Tag(name);
   await req.db.save(newTag);
 
-  return res.status(200).json({ tag: newTag });
+  return res.status(201).json({ tag: newTag });
 }
 
 async function index(req: ApiRequest, res: NextApiResponse) {

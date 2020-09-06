@@ -1,30 +1,50 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { EntityManager } from 'typeorm';
+import { ObjectId } from 'mongodb';
 
 import connectDatabase from 'middlewares/connectDatabase';
 
 interface ApiRequest extends NextApiRequest {
   db: EntityManager;
+  query: {
+    _id: string;
+  };
 }
 
 async function destroy(req: ApiRequest, res: NextApiResponse) {
-  const { id } = req.query;
-  const tag = await req.db.find('Tag', id);
+  const { _id } = req.query;
+  const tag = await req.db.findOne('Tag', _id);
 
   if (!tag) return res.status(404).json({ message: 'Tag not found' });
 
-  await req.db.delete('Tag', { id });
+  await req.db.delete('Tag', tag);
 
   return res.status(204).json([]);
 }
 
 async function update(req: ApiRequest, res: NextApiResponse) {
-  const { id } = req.query;
+  const { _id } = req.query;
   const { name } = req.body;
 
-  await req.db.update('Tag', { id }, { name });
+  if (!name) return res.status(422).json({ message: 'Invalid name' });
 
-  res.status(200).json([]);
+  const tag = await req.db.findOne('Tag', _id);
+
+  if (!tag) return res.status(404).json({ message: 'Tag not found' });
+
+  const [, tagsSameNameLength] = await req.db.findAndCount('Tag', {
+    where: {
+      _id: { $not: { $eq: new ObjectId(_id) } },
+      name,
+    },
+  });
+
+  if (tagsSameNameLength)
+    return res.status(422).json({ message: 'Already exist tag same name' });
+
+  await req.db.update('Tag', tag, { name });
+
+  return res.status(200).json({ tag: { _id, name } });
 }
 
 async function handler(req: ApiRequest, res: NextApiResponse) {
