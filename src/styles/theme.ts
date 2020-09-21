@@ -37,6 +37,7 @@ const theme = {
     },
     background: '#22343C',
     border: '#fff',
+    shadow: '#19282f',
     text: '#fff',
     mutedText: '#96A7AF',
   },
@@ -62,6 +63,7 @@ const theme = {
   radii: {
     sm: '6px',
     md: '12px',
+    lg: '25px',
   },
 };
 
