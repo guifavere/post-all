@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface LinkProps {
+  active: boolean;
+}
+
 export const Container = styled.footer`
   background: ${props => props.theme.colors.gray[400]};
   border-radius: ${props =>
@@ -20,29 +24,23 @@ export const Links = styled.nav`
   justify-content: space-evenly;
 `;
 
-export const FavoritedLink = styled.a`
+export const FavoritedLink = styled.a<LinkProps>`
   color: ${props => props.theme.colors.mutedText};
   transition: 0.2s color;
 
-  &:hover {
-    color: ${props => props.theme.colors.red[400]};
-  }
+  ${props => props.active && `color: ${props.theme.colors.red[400]};`};
 `;
 
-export const HomeLink = styled.a`
+export const HomeLink = styled.a<LinkProps>`
   color: ${props => props.theme.colors.mutedText};
   transition: 0.2s color;
 
-  &:hover {
-    color: ${props => props.theme.colors.green[400]};
-  }
+  ${props => props.active && `color: ${props.theme.colors.green[400]}`};
 `;
 
-export const NewPostLink = styled.a`
+export const NewPostLink = styled.a<LinkProps>`
   color: ${props => props.theme.colors.mutedText};
   transition: 0.2s color;
 
-  &:hover {
-    color: ${props => props.theme.colors.purple[400]};
-  }
+  ${props => props.active && `color: ${props.theme.colors.purple[400]}`};
 `;
