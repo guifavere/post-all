@@ -5,7 +5,7 @@ import { Input, SuccessButton } from 'components/Form';
 
 import { Form } from './styles';
 
-const SearchForm: React.FC = () => {
+export default function SearchForm(): JSX.Element {
   return (
     <Form>
       <Input placeholder="Search" type="text" />
@@ -14,6 +14,4 @@ const SearchForm: React.FC = () => {
       </SuccessButton>
     </Form>
   );
-};
-
-export default SearchForm;
+}
