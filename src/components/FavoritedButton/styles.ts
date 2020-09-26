@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export interface FavoritedButtonProps {
   isFavorited: boolean;
-  onClick: MouseEventHandler;
+  postId: number;
 }
 
 export const Button = styled.button<FavoritedButtonProps>`

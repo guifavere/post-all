@@ -11,11 +11,15 @@ export const Content = styled.main`
     margin: 50px 0;
   }
 
-  > form {
-    margin-bottom: 50px;
-  }
+  form {
 
-  > article + article {
-    margin-top: 30px;
+    > input {
+      margin-bottom: 20px;
+    }
+
+    > input,
+    > button {
+      width: 100%;
+    }
   }
 `;

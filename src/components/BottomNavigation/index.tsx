@@ -11,7 +11,7 @@ import {
   NewPostLink,
 } from './styles';
 
-const BottomNavigation: React.FC = () => {
+export default function ButtonNavigation() {
   const { route } = useRouter();
 
   return (
@@ -36,5 +36,3 @@ const BottomNavigation: React.FC = () => {
     </Container>
   );
 };
-
-export default BottomNavigation;

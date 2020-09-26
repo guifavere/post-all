@@ -7,12 +7,12 @@ import BottomNavigation from 'components/BottomNavigation';
 import GlobalStyle from 'styles/global';
 import theme from 'styles/theme';
 
-const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => (
-  <ThemeProvider theme={theme}>
-    <Component {...pageProps} />
-    <BottomNavigation />
-    <GlobalStyle />
-  </ThemeProvider>
-);
-
-export default MyApp;
+export default function ({ Component, pageProps }: AppProps) {
+  return (
+    <ThemeProvider theme={theme}>
+      <Component {...pageProps} />
+      <BottomNavigation />
+      <GlobalStyle />
+    </ThemeProvider>
+  );
+}

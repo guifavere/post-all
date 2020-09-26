@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useRouter } from 'next/router';
 import { FiChevronLeft } from 'react-icons/fi';
 
 import { Button } from './styles';
 
-export default function BackLink() {
+function BackLink() {
   const { back: handleBackPage } = useRouter();
 
   return (
@@ -14,3 +14,5 @@ export default function BackLink() {
     </Button>
   );
 }
+
+export default memo(BackLink);

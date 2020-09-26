@@ -3,12 +3,9 @@ import { FiHeart } from 'react-icons/fi';
 
 import { Button, FavoritedButtonProps } from './styles';
 
-export default function FavoritedButton({ isFavorited, onClick }: FavoritedButtonProps): JSX.Element {
+export default function FavoritedButton({ isFavorited }: FavoritedButtonProps): JSX.Element {
   return (
-    <Button
-      isFavorited={isFavorited}
-      onClick={onClick}
-    >
+    <Button isFavorited={isFavorited}>
       <FiHeart />
     </Button>
   )

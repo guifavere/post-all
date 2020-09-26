@@ -15,6 +15,7 @@ export const StyledButton = styled.button`
   color: #fff;
   font-family: ${props => props.theme.fontFamilies.body};
   font-size: ${props => props.theme.fontSizes.lg};
+  font-weight: ${props => props.theme.fontWeights.bold};
   height: 60px;
   min-width: 60px;
   transition: background 0.2s, color 0.2s;

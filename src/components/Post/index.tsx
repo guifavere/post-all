@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import FavoritedButton from 'components/FavoritedButton';
 
 import { Container, Header, Title, DateTime, Content, Footer } from './styles';
 
 interface PostProps {
+  id: number;
   title: string;
   content: string;
   isFavorited: boolean;
   updatedAt: string;
 }
 
-export default function Post({ title, updatedAt, content }: PostProps): JSX.Element {
+function Post({ id, title, updatedAt, content }: PostProps): JSX.Element {
   return (
     <Container>
       <Header>
@@ -20,8 +21,10 @@ export default function Post({ title, updatedAt, content }: PostProps): JSX.Elem
       </Header>
       <Content dangerouslySetInnerHTML={{ __html: content }} />
       <Footer>
-        <FavoritedButton isFavorited={false} onClick={() => {}} />
+        <FavoritedButton isFavorited={false} postId={id} />
       </Footer>
     </Container>
   );
 }
+
+export default memo(Post);

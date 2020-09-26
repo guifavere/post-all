@@ -5,7 +5,7 @@ import { Input, SuccessButton } from 'components/Form';
 
 import { Form } from './styles';
 
-export default function SearchForm(): JSX.Element {
+export default function SearchForm() {
   return (
     <Form>
       <Input placeholder="Search" type="text" />
