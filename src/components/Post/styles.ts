@@ -31,3 +31,7 @@ export const Content = styled.section`
   font-size: ${props => props.theme.fontSizes.sm};
   line-height: ${props => props.theme.lineHeights.body};
 `;
+
+export const Footer = styled.footer`
+  margin-top: 40px;
+`;

@@ -22,6 +22,10 @@ export const Links = styled.nav`
   display: flex;
   flex: 1;
   justify-content: space-evenly;
+
+  svg {
+    font-size: ${props => props.theme.fontSizes.lg};
+  }
 `;
 
 export const FavoritedLink = styled.a<LinkProps>`

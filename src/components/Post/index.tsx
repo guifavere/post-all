@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { Container, Header, Title, DateTime, Content } from './styles';
+import FavoritedButton from 'components/FavoritedButton';
+
+import { Container, Header, Title, DateTime, Content, Footer } from './styles';
 
 interface PostProps {
   title: string;
@@ -17,6 +19,9 @@ export default function Post({ title, updatedAt, content }: PostProps): JSX.Elem
         <DateTime>{updatedAt}</DateTime>
       </Header>
       <Content dangerouslySetInnerHTML={{ __html: content }} />
+      <Footer>
+        <FavoritedButton isFavorited={false} onClick={() => {}} />
+      </Footer>
     </Container>
   );
 }

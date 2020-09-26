@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledInput = styled.input`
+  background: ${props => props.theme.colors.gray[700]};
   border-radius: ${props => props.theme.radii.md};
   color: ${props => props.theme.colors.text};
   font-family: ${props => props.theme.fontFamilies.body};
