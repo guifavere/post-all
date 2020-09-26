@@ -12,13 +12,11 @@ const somePost = {
   updatedAt: '2000-12-03',
 }
 
-const Home: React.FC = () => (
-  <>
-    <SearchForm />
+export default function Home() {
+  return (
     <Content>
-      {[1, 2, 3].map(index => <Post key={index} {...somePost} />)}
+      <SearchForm />
+      <Post {...somePost} />
     </Content>
-  </>
-);
-
-export default Home;
+  );
+};
