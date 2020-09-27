@@ -26,8 +26,17 @@ async function create(req: ApiRequest, res: NextApiResponse) {
   res.status(201).json({ post: newPost });
 }
 
+async function index(req: ApiRequest, res: NextApiResponse) {
+  const tags = await req.db.find('Post');
+
+  res.status(200).json(tags);
+}
+
 async function handler(req: ApiRequest, res: NextApiResponse) {
   switch (req.method) {
+    case 'GET':
+      await index(req, res);
+      break;
     case 'POST':
       await create(req, res);
       break;
