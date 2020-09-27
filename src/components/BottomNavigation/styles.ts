@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 interface LinkProps {
   active: boolean;
@@ -28,23 +28,26 @@ export const Links = styled.nav`
   }
 `;
 
-export const FavoritedLink = styled.a<LinkProps>`
+const linkStyle = css`
   color: ${props => props.theme.colors.mutedText};
   transition: 0.2s color;
 
+  svg {
+    font-size: ${props => props.theme.fontSizes.md};
+  }
+`;
+
+export const FavoritedLink = styled.a<LinkProps>`
+  ${linkStyle}
   ${props => props.active && `color: ${props.theme.colors.red[400]};`};
 `;
 
 export const HomeLink = styled.a<LinkProps>`
-  color: ${props => props.theme.colors.mutedText};
-  transition: 0.2s color;
-
+  ${linkStyle}
   ${props => props.active && `color: ${props.theme.colors.green[400]}`};
 `;
 
 export const NewPostLink = styled.a<LinkProps>`
-  color: ${props => props.theme.colors.mutedText};
-  transition: 0.2s color;
-
+  ${linkStyle}
   ${props => props.active && `color: ${props.theme.colors.purple[400]}`};
 `;

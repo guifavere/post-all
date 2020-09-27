@@ -10,7 +10,7 @@ function BackLink() {
   return (
     <Button onClick={handleBackPage}>
       <FiChevronLeft />
-      <p>Back</p>
+      Back
     </Button>
   );
 }

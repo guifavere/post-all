@@ -12,7 +12,7 @@ export const Content = styled.main`
   }
 
   > form {
-    margin-bottom: 50px;
+    margin-bottom: 20px;
   }
 
   > article + article {

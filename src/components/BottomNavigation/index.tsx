@@ -19,17 +19,17 @@ export default function ButtonNavigation() {
       <Links>
         <Link href="/favorited">
           <FavoritedLink active={route === '/favorited'}>
-            <FiHeart size={18} />
+            <FiHeart />
           </FavoritedLink>
         </Link>
         <Link href="/">
           <HomeLink active={route === '/'}>
-            <FiHome size={18} />
+            <FiHome />
           </HomeLink>
         </Link>
         <Link href="/posts/new">
           <NewPostLink active={route === '/posts/new'}>
-            <FiPlus size={18} />
+            <FiPlus />
           </NewPostLink>
         </Link>
       </Links>

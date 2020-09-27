@@ -1,27 +1,37 @@
-import React, { InputHTMLAttributes, ButtonHTMLAttributes } from 'react';
+import { InputHTMLAttributes, ButtonHTMLAttributes } from 'react';
 import { Field } from 'formik';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { StyledInput, StyledSuccessButton } from './styles';
+import { Color } from 'styles/theme';
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  color: Color;
+}
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   children?: never;
 }
 
-export const Input = (props: InputProps): JSX.Element => (
-  <StyledInput {...props} />
-);
+// buttons
+export const Button = styled.button<ButtonProps>`
+  background: ${props => props.theme.colors[props.color][400]};
+  border-radius: ${props => props.theme.radii.md};
+  color: #fff;
+  font-family: ${props => props.theme.fontFamilies.body};
+  font-size: ${props => props.theme.fontSizes.lg};
+  font-weight: ${props => props.theme.fontWeights.bold};
+  height: 60px;
+  transition: background 0.2s, color 0.2s;
 
-export const SuccessButton = ({
-  children,
-  ...props
-}: ButtonProps): JSX.Element => (
-  <StyledSuccessButton {...props}>{children}</StyledSuccessButton>
-);
+  &:active,
+  &:hover {
+    background: ${props => props.theme.colors[props.color][700]};
+    color: ${props => props.theme.colors.mutedText};
+  }
+`;
 
-export const FormikField = styled(Field)`
+// fields
+const inputStyle = css`
   background: ${props => props.theme.colors.gray[700]};
   border-radius: ${props => props.theme.radii.md};
   color: ${props => props.theme.colors.text};
@@ -29,4 +39,12 @@ export const FormikField = styled(Field)`
   font-size: ${props => props.theme.fontSizes.sm};
   height: 60px;
   padding: 0 20px;
+`;
+
+export const Input = styled.input<InputProps>`
+  ${inputStyle}
+`;
+
+export const FormikField = styled(Field)`
+  ${inputStyle}
 `;

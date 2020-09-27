@@ -1,9 +1,14 @@
 import React from 'react';
 import { FiHeart } from 'react-icons/fi';
 
-import { Button, FavoritedButtonProps } from './styles';
+import { Button } from './styles';
 
-export default function FavoritedButton({ isFavorited }: FavoritedButtonProps): JSX.Element {
+interface FavoritedButtonProps {
+  isFavorited: boolean;
+  postId: number;
+}
+
+export default function FavoritedButton({ isFavorited }: FavoritedButtonProps) {
   return (
     <Button isFavorited={isFavorited}>
       <FiHeart />

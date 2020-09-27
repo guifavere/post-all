@@ -1,16 +1,11 @@
 import React from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form } from 'formik';
 
 import BackLink from 'components/BackLink';
-import { SuccessButton, FormikField } from 'components/Form';
+import { Button, FormikField } from 'components/Form';
 import Title from 'components/Title';
 
 import { Content } from './styles';
-
-interface formValues {
-  title: string;
-  content: string;
-}
 
 export default function NewPost() {
   const initialValues = {
@@ -30,9 +25,9 @@ export default function NewPost() {
         <Form>
           <FormikField name="title" placeholder="Title" />
           <FormikField name="content" placeholder="Content" />
-          <SuccessButton title="Add new post" type="submit">
+          <Button color="green" title="Add new post" type="submit">
             Add new post
-          </SuccessButton>
+          </Button>
         </Form>
       </Formik>
     </Content>

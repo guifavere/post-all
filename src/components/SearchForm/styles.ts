@@ -9,4 +9,8 @@ export const Form = styled.form`
     flex: 1;
     margin-right: 20px;
   }
+
+  button {
+    width: 60px;
+  }
 `;

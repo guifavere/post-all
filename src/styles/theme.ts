@@ -1,4 +1,6 @@
-const theme = {
+export type Color = 'blue' | 'gray' | 'green' | 'orange' | 'purple' | 'red' | 'yellow';
+
+export default {
   colors: {
     blue: {
       100: '#0062ff',
@@ -66,5 +68,3 @@ const theme = {
     lg: '25px',
   },
 };
-
-export default theme;
