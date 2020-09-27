@@ -1,5 +1,6 @@
 import { ConnectionOptions } from 'typeorm';
 
+import Post from 'entities/Post';
 import Tag from 'entities/Tag';
 
 export default <ConnectionOptions>{
@@ -9,5 +10,5 @@ export default <ConnectionOptions>{
   port: process.env.DB_PORT || 27017,
   database: process.env.DB_NAME,
   useUnifiedTopology: true,
-  entities: [Tag],
+  entities: [Post, Tag],
 };
