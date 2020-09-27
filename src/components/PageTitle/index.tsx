@@ -2,12 +2,12 @@ import { memo, ReactNode } from 'react';
 
 import { StyledTitle } from './styles';
 
-interface TitleProps {
+interface PageTitleProps {
   children: ReactNode;
 }
 
-function Title({ children }: TitleProps) {
+function PageTitle({ children }: PageTitleProps) {
   return <StyledTitle>{children}</StyledTitle>
 }
 
-export default memo(Title);
+export default memo(PageTitle);

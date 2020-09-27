@@ -1,9 +1,9 @@
 import React from 'react';
 
 import BackLink from 'components/BackLink';
+import PageTitle from 'components/PageTitle';
 import Post from 'components/Post';
 import SearchForm from 'components/SearchForm';
-import Title from 'components/Title';
 
 import { Content } from './styles';
 
@@ -19,7 +19,7 @@ export default function Favorited() {
   return (
     <Content>
       <BackLink />
-      <Title>Favorited</Title>
+      <PageTitle>Favorited</PageTitle>
       <SearchForm />
       <Post {...somePost} />
     </Content>
