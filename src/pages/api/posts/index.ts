@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { EntityManager } from 'typeorm';
 
-import connectDatabase from 'middlewares/connectDatabase';
+import connectDatabase from 'pages/_middlewares/connectDatabase';
 import Post from 'entities/Post';
 
 interface ApiRequest extends NextApiRequest {

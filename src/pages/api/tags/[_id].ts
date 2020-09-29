@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { EntityManager } from 'typeorm';
 import { ObjectId } from 'mongodb';
 
-import connectDatabase from 'middlewares/connectDatabase';
+import connectDatabase from 'pages/_middlewares/connectDatabase';
 
 interface ApiRequest extends NextApiRequest {
   db: EntityManager;

@@ -9,10 +9,14 @@ interface ApiRequest extends NextApiRequest {
 
 export default function (handler: NextApiHandler): NextApiHandler {
   return async (req: ApiRequest, res: NextApiResponse) => {
-    const client = await createConnection();
+    try {
+      const client = await createConnection();
 
-    req.db = client.manager;
+      req.db = client.manager;
 
-    return handler(req, res);
+      handler(req, res);
+    } catch (error) {
+      res.status(500).json({ message: 'Error establishing a database connection' });
+    }
   };
 }
