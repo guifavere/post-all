@@ -17,9 +17,8 @@ export default function (handler: NextApiHandler): NextApiHandler {
       handler(req, res);
     } catch (error) {
       const message = 'Error establishing the database connection';
-      const errors = [];
 
-      res.status(500).json({ message, errors });
+      res.status(500).json({ message });
     }
   };
 }

@@ -21,6 +21,7 @@ async function validateCreate(req: ApiRequest, res: NextApiResponse) {
     schema.validateSync({ title, content }, { abortEarly: false });
   } catch (error) {
     const message = 'Validation error';
+
     const errors = error.inner.map((e: yup.ValidationError) => ({
       [e.path]: e.message,
     }));
@@ -31,7 +32,9 @@ async function validateCreate(req: ApiRequest, res: NextApiResponse) {
   const post = await req.db.findOne('Post', { title });
 
   if (post) {
-    res.status(422).json({ message: 'Post already exists', errors: [] });
+    const message = 'Post already exists';
+
+    res.status(422).json({ message });
   }
 }
 
