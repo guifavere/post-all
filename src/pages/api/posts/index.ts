@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { EntityManager } from 'typeorm';
+import * as yup from 'yup';
 
 import connectDatabase from 'pages/_middlewares/connectDatabase';
 import Post from 'entities/Post';
@@ -8,16 +9,34 @@ interface ApiRequest extends NextApiRequest {
   db: EntityManager;
 }
 
-async function create(req: ApiRequest, res: NextApiResponse) {
+async function validateCreate(req: ApiRequest, res: NextApiResponse) {
+  const schema = yup.object().shape({
+    title: yup.string().min(3).required(),
+    content: yup.string().min(3).required(),
+  });
+
   const { title, content } = req.body;
 
-  if (!title) return res.status(422).json({ message: 'Invalid title' });
+  try {
+    schema.validateSync({ title, content }, { abortEarly: false });
+  } catch (error) {
+    const message = 'Validation error';
+    const errors = error.inner.map((e: yup.ValidationError) => ({
+      [e.path]: e.message,
+    }));
 
-  if (!content) return res.status(422).json({ message: 'Invalid content' });
+    res.status(422).json({ message, errors });
+  }
 
   const post = await req.db.findOne('Post', { title });
 
-  if (post) return res.status(422).json({ message: 'Post already exists' });
+  if (post) {
+    res.status(422).json({ message: 'Post already exists', errors: [] });
+  }
+}
+
+async function create(req: ApiRequest, res: NextApiResponse) {
+  const { title, content } = req.body;
 
   const newPost = new Post(title, content);
 
@@ -38,6 +57,7 @@ async function handler(req: ApiRequest, res: NextApiResponse) {
       await index(req, res);
       break;
     case 'POST':
+      await validateCreate(req, res);
       await create(req, res);
       break;
     default:
