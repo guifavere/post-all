@@ -17,6 +17,7 @@ async function validateCreate(req: ApiRequest, res: NextApiResponse) {
 
   const { title, content } = req.body;
 
+  // validate body
   try {
     schema.validateSync({ title, content }, { abortEarly: false });
   } catch (error) {
@@ -29,6 +30,7 @@ async function validateCreate(req: ApiRequest, res: NextApiResponse) {
     res.status(422).json({ message, errors });
   }
 
+  // check there is already post same title
   const post = await req.db.findOne('Post', { title });
 
   if (post) {

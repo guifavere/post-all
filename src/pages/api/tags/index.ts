@@ -16,6 +16,7 @@ async function validateCreate(req: ApiRequest, res: NextApiResponse) {
 
   const { name } = req.body;
 
+  // validate body
   try {
     schema.validateSync({ name }, { abortEarly: false });
   } catch (error) {
@@ -28,6 +29,7 @@ async function validateCreate(req: ApiRequest, res: NextApiResponse) {
     res.status(422).json({ message, errors });
   }
 
+  // check there is already tag same name
   const tag = await req.db.findOne('Tag', { name });
 
   if (tag) {
@@ -39,7 +41,6 @@ async function validateCreate(req: ApiRequest, res: NextApiResponse) {
 
 async function create(req: ApiRequest, res: NextApiResponse) {
   const { name } = req.body;
-
   const newTag = new Tag(name);
 
   await req.db.save(newTag);
