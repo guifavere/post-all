@@ -3,7 +3,7 @@ import { EntityManager } from 'typeorm';
 import { ObjectId } from 'mongodb';
 import * as yup from 'yup';
 
-import connectDatabase from 'pages/_middlewares/connectDatabase';
+import connectDatabase from 'pages/api/_middlewares/connectDatabase';
 import Post from 'entities/Post';
 
 interface ApiRequest extends NextApiRequest {

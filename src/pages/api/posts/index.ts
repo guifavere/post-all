@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { EntityManager } from 'typeorm';
 import * as yup from 'yup';
 
-import connectDatabase from 'pages/_middlewares/connectDatabase';
+import connectDatabase from 'pages/api/_middlewares/connectDatabase';
 import Post from 'entities/Post';
 
 interface ApiRequest extends NextApiRequest {
@@ -50,7 +50,7 @@ async function create(req: ApiRequest, res: NextApiResponse) {
   res.status(201).json({ post: newPost });
 }
 
-async function index(req: ApiRequest, res: NextApiResponse) {
+async function list(req: ApiRequest, res: NextApiResponse) {
   const tags = await req.db.find('Post');
 
   res.status(200).json(tags);
@@ -59,7 +59,7 @@ async function index(req: ApiRequest, res: NextApiResponse) {
 async function handler(req: ApiRequest, res: NextApiResponse) {
   switch (req.method) {
     case 'GET':
-      await index(req, res);
+      await list(req, res);
       break;
     case 'POST':
       await validateCreate(req, res);
