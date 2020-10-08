@@ -40,25 +40,63 @@ async function validateCreate(req: ApiRequest, res: NextApiResponse) {
   }
 }
 
+function validateList(req: ApiRequest, res: NextApiResponse) {
+  const schema = yup.object().shape({
+    limit: yup.number().min(1).max(100),
+    page: yup.number(),
+    filterTitle: yup.string(),
+  });
+
+  const {
+    limit = '10',
+    page = '1',
+    'filter[title]': filterTitle = '',
+  } = req.query;
+
+  // validate params
+  try {
+    schema.validateSync({ limit, page, filterTitle }, { abortEarly: false });
+  } catch (error) {
+    const message = 'Validation error';
+
+    const errors = error.inner.map((e: yup.ValidationError) => ({
+      [e.path]: e.message,
+    }));
+
+    res.status(422).json({ message, errors });
+  }
+
+  req.query = { limit, page, filterTitle };
+}
+
 async function create(req: ApiRequest, res: NextApiResponse) {
   const { title, content } = req.body;
+  const post = new Post(title, content);
 
-  const newPost = new Post(title, content);
+  await req.db.save(post);
 
-  await req.db.save(newPost);
-
-  res.status(201).json({ post: newPost });
+  res.status(201).json({ post });
 }
 
 async function list(req: ApiRequest, res: NextApiResponse) {
-  const tags = await req.db.find('Post');
+  const limit = Number(req.query.limit);
+  const page = (Number(req.query.page) - 1) * limit;
 
-  res.status(200).json(tags);
+  const posts = await req.db.find('Post', {
+    where: {
+      title: { $regex: req.query.filterTitle },
+    },
+    skip: page,
+    take: limit,
+  });
+
+  res.status(200).json({ posts });
 }
 
 async function handler(req: ApiRequest, res: NextApiResponse) {
   switch (req.method) {
     case 'GET':
+      await validateList(req, res);
       await list(req, res);
       break;
     case 'POST':

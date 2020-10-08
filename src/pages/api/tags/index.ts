@@ -70,11 +70,11 @@ function validateList(req: ApiRequest, res: NextApiResponse) {
 
 async function create(req: ApiRequest, res: NextApiResponse) {
   const { name } = req.body;
-  const newTag = new Tag(name);
+  const tag = new Tag(name);
 
-  await req.db.save(newTag);
+  await req.db.save(tag);
 
-  return res.status(201).json({ tag: newTag });
+  return res.status(201).json({ tag });
 }
 
 async function list(req: ApiRequest, res: NextApiResponse) {
@@ -89,7 +89,7 @@ async function list(req: ApiRequest, res: NextApiResponse) {
     take: limit,
   });
 
-  res.status(200).json(tags);
+  res.status(200).json({ tags });
 }
 
 async function handler(req: ApiRequest, res: NextApiResponse) {

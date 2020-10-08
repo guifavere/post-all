@@ -79,7 +79,9 @@ async function update(req: ApiRequest, res: NextApiResponse) {
 
   await req.db.update('Tag', tag, { name });
 
-  res.status(200).json({ tag: { _id, name } });
+  const updatedTag = { _id, name };
+
+  res.status(200).json({ tag: updatedTag });
 }
 
 async function handler(req: ApiRequest, res: NextApiResponse) {
