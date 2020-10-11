@@ -12,7 +12,6 @@ export const Content = styled.main`
   }
 
   form {
-
     > input {
       margin-bottom: 20px;
     }

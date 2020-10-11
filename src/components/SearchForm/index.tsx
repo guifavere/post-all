@@ -1,15 +1,31 @@
-import React from 'react';
+import React, { useRef, ReactElement, FormEvent } from 'react';
 import { FiSearch } from 'react-icons/fi';
 
 import { Input, Button } from 'components/Form';
 
 import { Form } from './styles';
 
-export default function SearchForm() {
+interface SearchFormProps {
+  onSubmit({ title }): void;
+}
+
+export default function SearchForm({
+  onSubmit,
+}: SearchFormProps): ReactElement {
+  const titleRef = useRef<HTMLInputElement>();
+
+  function handleSubmit(event: FormEvent) {
+    event.preventDefault();
+
+    const title = titleRef.current.value;
+
+    onSubmit({ title });
+  }
+
   return (
-    <Form>
-      <Input placeholder="Search" type="text" />
-      <Button color="green" type="button">
+    <Form onSubmit={handleSubmit}>
+      <Input placeholder="Search" ref={titleRef} type="text" />
+      <Button color="green" type="submit">
         <FiSearch />
       </Button>
     </Form>

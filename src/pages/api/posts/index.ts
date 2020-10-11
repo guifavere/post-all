@@ -90,7 +90,7 @@ async function list(req: ApiRequest, res: NextApiResponse) {
     take: limit,
   });
 
-  res.status(200).json({ posts });
+  res.status(200).json(posts);
 }
 
 async function handler(req: ApiRequest, res: NextApiResponse) {

@@ -5,14 +5,20 @@ import FavoritedButton from 'components/FavoritedButton';
 import { Container, Header, Title, DateTime, Content, Footer } from './styles';
 
 interface PostProps {
-  id: number;
+  _id: number;
   title: string;
   content: string;
   isFavorited: boolean;
   updatedAt: string;
 }
 
-function Post({ id, title, updatedAt, content }: PostProps): JSX.Element {
+function Post({
+  _id,
+  title,
+  content,
+  isFavorited,
+  updatedAt,
+}: PostProps): JSX.Element {
   return (
     <Container>
       <Header>
@@ -21,7 +27,7 @@ function Post({ id, title, updatedAt, content }: PostProps): JSX.Element {
       </Header>
       <Content dangerouslySetInnerHTML={{ __html: content }} />
       <Footer>
-        <FavoritedButton isFavorited={false} postId={id} />
+        <FavoritedButton isFavorited={isFavorited} postId={_id} />
       </Footer>
     </Container>
   );
