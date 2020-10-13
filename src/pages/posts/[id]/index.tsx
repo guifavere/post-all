@@ -4,15 +4,24 @@ import BackLink from 'components/BackLink';
 import FavoritedButton from 'components/FavoritedButton';
 import PageTitle from 'components/PageTitle';
 
-import { Content, Post, PostHeader, PostTitle, PostContent, PostFooter, PostDateTime } from './styles';
+import {
+  Content,
+  Post,
+  PostHeader,
+  PostTitle,
+  PostContent,
+  PostFooter,
+  PostDateTime,
+} from './styles';
 
 const somePost = {
   id: 1,
   title: 'Learning typescript',
-  content: '<p><strong>Lorem ipsum lorem ipsum lorem ipsum</strong><br />Lorem ipsum lorem ipsum lorem ipsum</p>',
+  content:
+    '<p><strong>Lorem ipsum lorem ipsum lorem ipsum</strong><br />Lorem ipsum lorem ipsum lorem ipsum</p>',
   isFavorited: true,
   updatedAt: '2000-12-03',
-}
+};
 
 export default function PostView() {
   return (

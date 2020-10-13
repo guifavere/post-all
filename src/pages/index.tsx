@@ -3,6 +3,7 @@ import useSWR from 'swr';
 
 import SearchForm from 'components/SearchForm';
 import Post from 'components/Post';
+import PostSkeleton from 'components/Post/Skeleton';
 
 import { Content } from './styles';
 
@@ -49,12 +50,12 @@ export default function Home(): ReactElement {
     homeInitialState,
   );
 
-  const handleUpdateFilters = useCallback(({ title }) => {
-    dispatch({ type: 'UPDATE_FILTERS', payload: { filters: { title } } });
+  const handleLoadMorePosts = useCallback(() => {
+    dispatch({ type: 'LOAD_MORE_POSTS' });
   }, []);
 
-  const handleNextPage = useCallback(() => {
-    dispatch({ type: 'LOAD_MORE_POSTS' });
+  const handleUpdateFilters = useCallback(({ title }) => {
+    dispatch({ type: 'UPDATE_FILTERS', payload: { filters: { title } } });
   }, []);
 
   const posts = [];
@@ -69,7 +70,7 @@ export default function Home(): ReactElement {
     <Content>
       <SearchForm onSubmit={handleUpdateFilters} />
       {posts}
-      <button onClick={handleNextPage} type="button">
+      <button onClick={handleLoadMorePosts} type="button">
         load more...
       </button>
     </Content>
@@ -82,15 +83,17 @@ interface PostsProps {
   filterTitle: string | null;
 }
 
-function Posts({ limit, page, filterTitle }: PostsProps): ReactElement {
-  const { data: posts } = useSWR<IPost[]>(
-    `/api/posts?limit=${limit}&page=${page}&filter[title]=${filterTitle}`,
-  );
-
-  console.log('POSTS', { posts, page });
+function Posts({ limit, page, filterTitle: title }: PostsProps): ReactElement {
+  const url = `/api/posts?limit=${limit}&page=${page}&filter[title]=${title}`;
+  const { data: posts } = useSWR<IPost[]>(url);
 
   if (!posts) {
-    return <p>loading...</p>;
+    return (
+      <>
+        <PostSkeleton />
+        <PostSkeleton />
+      </>
+    );
   }
 
   return (
