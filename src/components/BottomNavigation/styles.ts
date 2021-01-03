@@ -30,6 +30,7 @@ export const Links = styled.nav`
 
 const linkStyle = css`
   color: ${props => props.theme.colors.mutedText};
+  cursor: pointer;
   transition: 0.2s color;
 
   svg {

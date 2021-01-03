@@ -1,4 +1,11 @@
-export type Color = 'blue' | 'gray' | 'green' | 'orange' | 'purple' | 'red' | 'yellow';
+export type Color =
+  | 'blue'
+  | 'gray'
+  | 'green'
+  | 'orange'
+  | 'purple'
+  | 'red'
+  | 'yellow';
 
 export default {
   colors: {
@@ -67,4 +74,4 @@ export default {
     md: '12px',
     lg: '25px',
   },
-};
+} as const;

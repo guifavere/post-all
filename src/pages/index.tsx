@@ -5,7 +5,7 @@ import SearchForm from 'components/SearchForm';
 import Post from 'components/Post';
 import PostSkeleton from 'components/Post/Skeleton';
 
-import { Content } from './styles';
+import { Content } from '../styles/pages/main';
 
 interface IPost {
   _id: number;

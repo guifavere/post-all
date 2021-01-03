@@ -9,6 +9,10 @@ interface ApiRequest extends NextApiRequest {
   db: EntityManager;
 }
 
+interface Errors {
+  name?: string;
+}
+
 async function validateCreate(req: ApiRequest, res: NextApiResponse) {
   const schema = yup.object().shape({
     name: yup.string().min(3).required(),
@@ -22,14 +26,17 @@ async function validateCreate(req: ApiRequest, res: NextApiResponse) {
   } catch (error) {
     const message = 'Validation error';
 
-    const errors = error.inner.map((e: yup.ValidationError) => ({
-      [e.path]: e.message,
-    }));
+    const errors: Errors = error.inner.reduce(
+      (newErrors, e: yup.ValidationError) => {
+        return { ...newErrors, ...{ [e.path]: e.message } };
+      },
+      {},
+    );
 
     res.status(422).json({ message, errors });
   }
 
-  // check there is already tag same name
+  // check if there is already tag same name
   const tag = await req.db.findOne('Tag', { name });
 
   if (tag) {

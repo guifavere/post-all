@@ -1,5 +1,5 @@
-import { InputHTMLAttributes, ButtonHTMLAttributes } from 'react';
-import { Field } from 'formik';
+import React, { InputHTMLAttributes, ButtonHTMLAttributes } from 'react';
+import { useField } from 'formik';
 import styled, { css } from 'styled-components';
 
 import { Color } from 'styles/theme';
@@ -31,6 +31,22 @@ export const Button = styled.button<ButtonProps>`
 `;
 
 // fields
+export const Error = styled.span`
+  color: ${props => props.theme.colors.red[400]};
+  font-family: ${props => props.theme.fontFamilies.body};
+  font-size: ${props => props.theme.fontSizes.sm};
+  line-height: ${props => props.theme.lineHeights.body};
+`;
+
+export const FieldGroup = styled.fieldset`
+  display: flex;
+  flex-direction: column;
+
+  & + fieldset {
+    margin-top: 30px;
+  }
+`;
+
 const inputStyle = css`
   background: ${props => props.theme.colors.gray[700]};
   border-radius: ${props => props.theme.radii.md};
@@ -38,13 +54,23 @@ const inputStyle = css`
   font-family: ${props => props.theme.fontFamilies.body};
   font-size: ${props => props.theme.fontSizes.sm};
   height: 60px;
+  margin-bottom: 5px;
   padding: 0 20px;
+  width: 100%;
 `;
 
 export const Input = styled.input<InputProps>`
   ${inputStyle}
 `;
 
-export const FormikField = styled(Field)`
-  ${inputStyle}
-`;
+export const FormikField = (props: InputProps): JSX.Element => {
+  const { name } = props;
+  const [field, { touched, error }] = useField(name);
+
+  return (
+    <>
+      <Input {...field} {...props} />
+      {touched && error && <Error>{`* ${error}`}</Error>}
+    </>
+  );
+};

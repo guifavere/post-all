@@ -12,7 +12,7 @@ import {
   PostContent,
   PostFooter,
   PostDateTime,
-} from './styles';
+} from '../../../styles/pages/editPost';
 
 const somePost = {
   id: 1,

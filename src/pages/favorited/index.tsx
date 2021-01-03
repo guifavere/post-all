@@ -4,7 +4,7 @@ import PageTitle from 'components/PageTitle';
 import Post from 'components/Post';
 import SearchForm from 'components/SearchForm';
 
-import { Content } from './styles';
+import { Content } from '../../styles/pages/listFavorited';
 
 const somePost = {
   _id: 1,

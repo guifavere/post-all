@@ -9,6 +9,11 @@ interface ApiRequest extends NextApiRequest {
   db: EntityManager;
 }
 
+interface Errors {
+  title?: string;
+  content?: string;
+}
+
 async function validateCreate(req: ApiRequest, res: NextApiResponse) {
   const schema = yup.object().shape({
     title: yup.string().min(3).required(),
@@ -17,26 +22,29 @@ async function validateCreate(req: ApiRequest, res: NextApiResponse) {
 
   const { title, content } = req.body;
 
-  // validate body
   try {
     schema.validateSync({ title, content }, { abortEarly: false });
   } catch (error) {
     const message = 'Validation error';
 
-    const errors = error.inner.map((e: yup.ValidationError) => ({
-      [e.path]: e.message,
-    }));
+    const errors: Errors = error.inner.reduce(
+      (newErrors, e: yup.ValidationError) => {
+        return { ...newErrors, ...{ [e.path]: e.message } };
+      },
+      {},
+    );
 
     res.status(422).json({ message, errors });
   }
 
-  // check there is already post same title
+  // check if there is already post same title
   const post = await req.db.findOne('Post', { title });
 
   if (post) {
     const message = 'Post already exists';
+    const errors = { title: 'already exist post same title' };
 
-    res.status(422).json({ message });
+    res.status(422).json({ message, errors });
   }
 }
 
@@ -53,7 +61,6 @@ function validateList(req: ApiRequest, res: NextApiResponse) {
     'filter[title]': filterTitle = '',
   } = req.query;
 
-  // validate params
   try {
     schema.validateSync({ limit, page, filterTitle }, { abortEarly: false });
   } catch (error) {
@@ -96,7 +103,7 @@ async function list(req: ApiRequest, res: NextApiResponse) {
 async function handler(req: ApiRequest, res: NextApiResponse) {
   switch (req.method) {
     case 'GET':
-      await validateList(req, res);
+      validateList(req, res);
       await list(req, res);
       break;
     case 'POST':
