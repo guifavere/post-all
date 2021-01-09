@@ -1,11 +1,19 @@
 import { createConnection, getConnectionManager, Connection } from 'typeorm';
 
-import DbConfig from 'config/database';
+import dbConfig from 'config/database';
 
 export default async (): Promise<Connection> => {
   const client = getConnectionManager();
 
-  return client.has('default')
-    ? client.get('default')
-    : createConnection(DbConfig);
+  function getDefaultConnection(): Connection {
+    return client.get('default');
+  }
+
+  function startNewConnection(): Promise<Connection> {
+    return createConnection(dbConfig);
+  }
+
+  const dbAlreadyConnected = client.has('default');
+
+  return dbAlreadyConnected ? getDefaultConnection() : startNewConnection();
 };
