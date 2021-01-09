@@ -4,6 +4,7 @@
 .pnp.js
 
 # testing
+globalConfig.json
 /coverage
 
 # next.js
