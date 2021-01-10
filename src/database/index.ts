@@ -5,7 +5,7 @@ import dbConfig from 'config/database';
 export default async (): Promise<Connection> => {
   const client = getConnectionManager();
 
-  function getDefaultConnection(): Connection {
+  function getConnection(): Connection {
     return client.get('default');
   }
 
@@ -15,5 +15,5 @@ export default async (): Promise<Connection> => {
 
   const dbAlreadyConnected = client.has('default');
 
-  return dbAlreadyConnected ? getDefaultConnection() : startNewConnection();
+  return dbAlreadyConnected ? getConnection() : startNewConnection();
 };
