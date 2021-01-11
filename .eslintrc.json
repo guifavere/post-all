@@ -42,7 +42,8 @@
     "max-len": [2, { "code": 80, "tabWidth": 4, "ignoreUrls": true }],
     "camelcase": "error",
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
-    "no-underscore-dangle": ["error", { "allow": ["_id", "_getData"] }]
+    "no-underscore-dangle": ["error", { "allow": ["_id", "_getData"] }],
+    "import/no-extraneous-dependencies": "off"
   },
   "settings": {
     "import/resolver": {
