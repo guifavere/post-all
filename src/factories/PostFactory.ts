@@ -1,40 +1,49 @@
 import faker from 'faker';
 
-import createConnection from 'database';
+import createDBConnection from 'database';
 import Post from 'entities/Post';
 
-interface Props {
-  title?: string;
-  content?: string;
+interface PostProps {
+  title: string;
+  content: string;
 }
 
+type PartialPostProps = { [P in keyof PostProps]?: PostProps[P] };
+
 export default class PostFactory {
-  private static build(props: Props): Post {
-    const defaultAttributes = {
+  private post: Post;
+
+  private constructor(partialProps: PartialPostProps) {
+    this.post = this.build(partialProps);
+  }
+
+  private getDefaultProps(): PostProps {
+    return {
       title: faker.lorem.sentence(),
       content: faker.lorem.sentences(),
     };
-
-    const attributes = { ...defaultAttributes, ...props };
-
-    const { title, content } = attributes;
-
-    const post = new Post(title, content);
-
-    return post;
   }
 
-  public static async create(props: Props = {}): Promise<Post> {
-    const client = await createConnection();
+  private build(partialPostProps: PartialPostProps): Post {
+    const defaultProps = this.getDefaultProps();
+    const props = { ...defaultProps, ...partialPostProps };
 
-    const post = this.build(props);
+    const { title, content } = props;
 
-    const savedPost = client.manager.save(post);
-
-    return savedPost;
+    return new Post(title, content);
   }
 
-  public static make(props: Props = {}): Post {
-    return this.build(props);
+  public static async create(
+    partialPostProps: PartialPostProps = {},
+  ): Promise<Post> {
+    const dbClient = await createDBConnection();
+
+    const postFactory = new PostFactory(partialPostProps);
+
+    return dbClient.manager.save(postFactory.post);
+  }
+
+  public static make(partialProps: PartialPostProps = {}): Post {
+    return new PostFactory(partialProps).post;
   }
 }
