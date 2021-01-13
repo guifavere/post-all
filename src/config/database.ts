@@ -4,7 +4,6 @@ import Post from 'entities/Post';
 import Tag from 'entities/Tag';
 
 const isTestEnvironment = process.env.NODE_ENV === 'test';
-
 const testEnvironmentMongoUrl = process.env.MONGO_URL;
 
 const database = process.env.DB_NAME;
